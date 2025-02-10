@@ -1,6 +1,6 @@
 from win32com.client import Dispatch
 import extract_msg
-import weasyprint
+from xhtml2pdf import pisa
 import os
 import re
 
@@ -34,4 +34,22 @@ text_file = open("Output.html", "w")
 text_file.write(html)
 text_file.close()
 
-pdf = weasyprint.HTML('hOutput.html').write_pdf()
+def convert_html_to_pdf(source_html, output_filename):
+    # open output file for writing (truncated binary)
+    result_file = open(output_filename, "w+b")
+
+    # convert HTML to PDF
+    pisa_status = pisa.CreatePDF(
+            source_html,                # the HTML to convert
+            dest=result_file)           # file handle to recieve result
+
+    # close output file
+    result_file.close()                 # close output file
+
+    # return False on success and True on errors
+    return pisa_status.err
+
+# Define your data
+source_html = open('Output.html')
+output_filename = "test.pdf"
+convert_html_to_pdf(source_html, output_filename)
