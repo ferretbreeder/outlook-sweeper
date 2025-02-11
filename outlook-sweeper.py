@@ -15,7 +15,7 @@ name = re.sub('[^A-Za-z0-9]+', '', name)+'.msg'
 #to save in the current working directory
 message.SaveAs(os.getcwd()+'//'+name)
 
-f = r'REProofreview525AYand26AYemails.msg'  # currently hardcoded
+f = name
 msg = extract_msg.Message(f)
 msg_sender = msg.sender
 msg_date = msg.date
@@ -51,5 +51,5 @@ def convert_html_to_pdf(source_html, output_filename):
 
 # Define your data
 source_html = open('Output.html')
-output_filename = "test.pdf"
+output_filename = f'{name}.pdf'
 convert_html_to_pdf(source_html, output_filename)
